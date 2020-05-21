@@ -1,14 +1,20 @@
-package neural;
+package neural.and;
 
-import neural.and.Perceptron;
+import javafx.application.Application;
+import javafx.scene.chart.XYChart;
+import javafx.stage.Stage;
+
+import java.util.stream.IntStream;
 
 public class Driver {
+    static double m = 0;
+    static double b = 0;
 
     public static void main(String[] args) {
         int[][][] data = Perceptron.andData;
         double[] weights = Perceptron.INITIAL_WEIGHTS;
 
-        Driver driver = new Driver();
+        Driver driver = new neural.and.Driver();
         Perceptron perceptron = new Perceptron();
         boolean errorFlag = true;
         int epochNumber = 0;
@@ -30,6 +36,25 @@ public class Driver {
                 weights = adjustedWeights;
             }
         }
+
+        //m = -weights[1] / weights[0];
+        //b = Perceptron.THRESHOLD / weights[0];
+        //System.out.println("\ny = " + String.format("%.2f", m) + "x " + String.format("%.2f", b));
+        //launch(args);
+    }
+
+    public void start(Stage stage) throws Exception {
+        stage.setTitle(" Neural Network AND ");
+        XYChart.Series<Number, Number> series1 = new XYChart.Series<>();
+        series1.setName("zero");
+        XYChart.Series<Number, Number> series2 = new XYChart.Series<>();
+        series1.setName("one");
+        IntStream.range(0, Perceptron.andData.length).forEach(i -> {
+            int x = Perceptron.andData[i][0][0], y = Perceptron.andData[i][0][1];
+            if (Perceptron.andData[i][1][0] == 0) series1.getData().add(new XYChart.Data<Number, Number>(x, y));
+            else series2.getData().add(new XYChart.Data<Number, Number>(x, y));
+        });
+
     }
 
     public void printHeading(int epochNumber) {

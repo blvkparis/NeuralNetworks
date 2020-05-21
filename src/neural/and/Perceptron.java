@@ -8,15 +8,28 @@ public class Perceptron {
             {{1, 1}, {1}}
     };
 
+    public static final int[][][] orData = {
+            {{0, 0}, {0}},
+            {{0, 1}, {1}},
+            {{1, 0}, {1}},
+            {{1, 1}, {1}}
+    };
+
+    public static final int[][] notData = {
+            {0, 1},
+            {1, 0}
+    };
+
     // TODO - XOR_Training
-    public static final int[][][] xorData = {
+    /* public static final int[][][] xorData = {
             {{0, 0}, {0}},
             {{0, 1}, {1}},
             {{1, 0}, {1}},
             {{1, 1}, {0}}
-    };
+    }; */
 
-    public static final double LEARNING_RATE = 0.05;
+    public static final double THRESHOLD = 1.0;
+    public static final double LEARNING_RATE = 0.5;
     public static final double[] INITIAL_WEIGHTS = {Math.random(), Math.random()};
 
     public double calculateWeightedSum(int[] data, double[] weights) {
@@ -28,9 +41,7 @@ public class Perceptron {
     }
 
     public int applyActivationFunction(double weightedSum) {
-        int result = 0;
-        if (weightedSum > 1) result = 1;
-        return result;
+        return (weightedSum > THRESHOLD) ? 1 : 0;
     }
 
     public double[] adjustedWeights(int[] data, double[] weights, double error) {
